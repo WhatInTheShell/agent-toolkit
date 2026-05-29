@@ -1,238 +1,96 @@
 ---
 name: difficult-workplace-conversations
-description: Structured approach to workplace conflicts, performance discussions, and challenging feedback using preparation-delivery-followup framework. Use when preparing for tough conversations, addressing conflicts, giving critical feedback, or navigating sensitive workplace discussions.
+description: Practitioner guide for preparing, navigating, and following up on high-stakes workplace conversations — performance issues, peer conflict, upward feedback, terminations, salary negotiations, and emotionally charged discussions. Trigger phrases: "how do I talk to", "preparing for a hard conversation", "giving difficult feedback", "conflict with coworker", "talking to my manager about", "addressing performance", "someone is defensive".
 allowed-tools: Read, Glob, Grep
 ---
 
-# Difficult Conversations Skill
+## Mindset
 
-A structured framework for approaching challenging workplace conversations including conflicts, performance issues, sensitive feedback, and emotionally charged discussions.
+- **The goal is a shared understanding, not a verdict.** Most failed conversations happen because one party enters to win. Practitioners enter to learn something they don't know yet — even when the facts seem clear.
+- **Timing is a power lever most people waste.** Raising an issue when the other person is stressed, public, or cornered guarantees defense. The right moment (private, unhurried, not post-incident) does half the work for you.
+- **Specificity is protection.** Vague feedback ("you need to be more professional") creates defensiveness because it leaves the other person to guess. Specificity removes the guess and removes the threat.
+- **A prepared BATNA changes how you show up.** Knowing what you'll do if the conversation fails — not as a threat, but as a real alternative — eliminates desperation from your posture. The other person feels it even if you never say it.
+- **Regression is normal, not evidence of failure.** Behavior changes after a hard conversation often reverse within 2–3 weeks. Practitioners schedule a check-in at week 3 precisely because of this, not because they distrust the other person.
 
-## When to Use This Skill
+## Navigation
 
-- Preparing for a challenging conversation with a colleague
-- Addressing performance issues with a team member
-- Delivering difficult feedback to a peer or manager
-- Navigating conflict between team members
-- Discussing sensitive topics (salary, promotion, termination)
-- Handling emotional or defensive reactions
-- Following up after difficult discussions
+**Use this skill when**:
+- Preparing a conversation with real stakes: performance, conflict, termination, salary, upward feedback
+- Someone is defensive, emotional, or has a pattern of avoiding accountability
+- You need to give feedback to someone with more organizational power than you
+- A prior conversation didn't produce lasting change
 
-## Core Framework: Preparation-Delivery-Followup
+**Do NOT use this skill when**:
+- Casual feedback in a low-stakes context (use `feedback-mastery` instead)
+- HR/legal issues where process must lead (loop in HR first, then use this for your role in that process)
+- Written communication only (this skill is optimized for live dialogue)
 
-Difficult conversations succeed or fail based on three phases:
+**Triage — what kind of conversation is this?**
 
-### Phase 1: Preparation (Before)
+```
+Is there a power differential (you are the manager)?
+  YES → Performance/termination track → load references/conversation-framework.md
+  NO  → Is this a pattern or a one-time incident?
+          PATTERN → Conflict/peer track → load references/delivery-scripts.md
+          ONE-TIME → Is it upward (to your manager)?
+                       YES → Upward feedback track → see Upward Feedback section below
+                       NO  → Sensitive topic track → load references/emotional-regulation.md
+```
 
-**Purpose:** Set yourself up for a productive conversation
+## Philosophy
 
-1. **Clarify the Issue**
-   - What specifically happened? (Observable facts only)
-   - What is the impact? (On you, team, work)
-   - What do you need to change?
+The hardest conversations are hard because both parties have a legitimate version of events. Your job is not to correct their version but to build a third version together — one specific enough to produce durable action.
 
-2. **Check Your Emotions**
-   - What am I feeling? Why?
-   - Am I calm enough to have this conversation?
-   - What might trigger me during this conversation?
+## NEVER
 
-3. **Consider Their Perspective**
-   - How might they see this situation?
-   - What constraints or pressures might they have?
-   - What do they care about that I can acknowledge?
+- **NEVER open with impact before the other person understands what behavior you're describing** — they'll spend the entire conversation defending their intention instead of hearing the impact. Behavior first, impact second, always.
+- **NEVER have a high-stakes conversation without a written BATNA** — not to use as leverage, but because without one your desperation leaks into your tone and the other person calibrates to it. Write down what you'll do if this goes nowhere.
+- **NEVER follow up a difficult conversation only once** — single follow-ups let people wait you out. Practitioners set a 3-week check-in at the close of the original conversation. Most regressions happen at week 2–3, not week 1.
+- **NEVER summarize the conversation immediately afterward in a way that positions you as correct** — written summaries ("per our discussion, you agreed to...") feel like legal filings. Instead, ask the other person to summarize what they're taking away. Their words reveal whether there's real alignment.
+- **NEVER conflate "they heard me" with "they agreed"** — acknowledgment ("I understand your concern") is not commitment. Close every conversation with a specific, owned action: who does what, by when, and how you'll both know it happened.
+- **NEVER raise a performance issue for the first time in a formal review** — the employee experiences it as an ambush, the feedback becomes legally and relationally contaminated, and you've lost 6–12 months of intervention time. Informal conversations must precede formal ones.
+- **NEVER use "we need to talk" as a meeting invite subject** — it triggers 48–72 hours of anxiety that arrives to your conversation as pre-loaded defensiveness. Name the topic neutrally: "checking in on Q3 deliverables."
 
-4. **Define Your Goal**
-   - What outcome do I want?
-   - What is the minimum acceptable result?
-   - What am I willing to compromise on?
+## When Things Go Wrong
 
-### Phase 2: Delivery (During)
+| Situation | Likely Cause | Recovery |
+|-----------|-------------|----------|
+| Other person shuts down or goes silent | Felt accused, not invited | Explicitly name what you're seeing: "I notice you've gone quiet — I want to make sure this feels safe to discuss." Then pause. Don't fill the silence. |
+| Conversation spirals into unrelated grievances | No shared agenda set upfront | Interrupt cleanly: "I want to hear all of this. Can we agree to finish this topic first and schedule time for the rest?" |
+| Agreed actions don't happen after the conversation | Agreement was vague or socially coerced | Return to the conversation with curiosity, not accusation. Ask what got in the way. Vague commitments usually mean the person didn't actually agree — they just ended the discomfort. |
+| Person becomes hostile or escalates | Conversation revealed a threat to their status/livelihood | De-escalate by naming it: "I can see this is hitting hard. I'm not here to threaten your position — I'm here because I want this to work." Then stop talking and let them respond. |
+| Your own emotions take over mid-conversation | Ambush response to something unexpected | Use the explicit pause: "I want to make sure I respond thoughtfully. Can I have a moment?" Practitioners normalize pausing; it signals self-awareness, not weakness. |
 
-**Purpose:** Have the conversation effectively
+## Reference Files (Load on Demand)
 
-1. **Open Neutrally**
-   - Start with facts, not judgments
-   - Express intent to understand, not accuse
-   - Create psychological safety
+| Reference | When to Load |
+|-----------|-------------|
+| `references/conversation-framework.md` | Full preparation workflow, fact/story separation exercise, contribution mapping |
+| `references/preparation-template.md` | Blank worksheet to fill out before the conversation; covers goal, BATNA, trigger anticipation |
+| `references/delivery-scripts.md` | Opening formulas by situation type, de-escalation phrases, closing scripts |
+| `references/emotional-regulation.md` | Pre-conversation regulation techniques; managing your own state during high-charge moments |
 
-2. **Share Your Perspective**
-   - Describe behavior, not character
-   - Focus on impact, not intention
-   - Use "I" statements, not "you always"
+Load the relevant reference when the user needs scripts, templates, or deep-dive frameworks. Do not reproduce reference content inline unless the user asks for it directly.
 
-3. **Listen Actively**
-   - Ask clarifying questions
-   - Acknowledge their viewpoint
-   - Look for shared interests
+## Upward Feedback (Special Case)
 
-4. **Seek Resolution**
-   - Propose specific actions
-   - Agree on next steps
-   - Set check-in timeline
+Giving feedback to someone with power over you has a different risk profile. Three adjustments:
 
-### Phase 3: Followup (After)
+1. **Frame as impact on your effectiveness, not a critique of their behavior** — "When X happens, I find it harder to do Y" is harder to dismiss than "you do X."
+2. **Request, don't demand** — end with a question, not a directive: "Would you be open to trying Z?" gives them an exit that isn't losing face.
+3. **Accept that they may not change** — your goal is to have said it clearly once, not to fix them. If nothing changes, that's data for your own decisions.
 
-**Purpose:** Ensure lasting resolution
+## Conversation Types Quick Reference
 
-1. **Document Agreements**
-   - What was agreed?
-   - Who does what by when?
-   - How will you measure success?
-
-2. **Check Progress**
-   - Follow up as promised
-   - Acknowledge improvements
-   - Address continued issues promptly
-
-3. **Maintain Relationship**
-   - Separate issue from person
-   - Rebuild trust over time
-   - Watch for regression
-
-## Key Principles
-
-### Separate Impact from Intent
-
-**What happened:** Observable behavior
-**What I felt:** Your emotional response
-**What I assume:** Their intention (often wrong)
-
-Focus conversation on behavior and impact, not assumed intentions.
-
-### The SBI Model
-
-**Situation:** When and where did this happen?
-**Behavior:** What specifically did they do/say?
-**Impact:** What was the effect on you, the team, or the work?
-
-### Managing Emotions
-
-| If You Feel | Before Acting |
-| ----------- | ------------- |
-| Angry | Wait 24 hours, write but don't send |
-| Hurt | Talk to neutral party first |
-| Anxious | Practice the conversation |
-| Defensive | Identify your contribution |
-
-### When to Escalate
-
-Escalate when:
-
-- Safety is at risk
-- Legal issues involved
-- Repeated conversations haven't worked
-- Power dynamics prevent resolution
-- You need documentation
-
-## Conversation Types
-
-### Performance Feedback
-
-- Lead with specific examples
-- Connect to expectations/standards
-- Focus on future improvement
-- Offer support and resources
-
-### Conflict Resolution
-
-- Hear both sides separately first
-- Identify underlying interests
-- Look for win-win solutions
-- Document agreements
-
-### Sensitive Topics
-
-- Choose private, neutral setting
-- Allow time for processing
-- Be direct but compassionate
-- Respect confidentiality
-
-### Receiving Feedback
-
-- Thank them for feedback
-- Ask clarifying questions
-- Don't defend immediately
-- Reflect before responding
-
-## References (Load When Needed)
-
-### Detailed Frameworks
-
-- **[Conversation Framework](references/conversation-framework.md)**: Complete three-phase framework with scripts and examples
-- **[Preparation Template](references/preparation-template.md)**: Worksheet for preparing before difficult conversations
-- **[Delivery Scripts](references/delivery-scripts.md)**: Opening lines, response handling, reframing techniques
-- **[Emotional Regulation](references/emotional-regulation.md)**: Managing your own emotions before and during
+| Type | Primary Risk | Key Move |
+|------|-------------|----------|
+| Performance issue | They feel blindsided | Cite prior informal conversations; ask what they'd need to succeed |
+| Peer conflict | Both parties feel wronged | Separate fact from interpretation before the conversation, not during |
+| Termination | Emotional flooding | Short, clear, no hedging; deliver the decision in the first 60 seconds |
+| Salary/promotion | Negotiation feels adversarial | Anchor to market data + contribution, not personal need |
+| Upward feedback | Power retaliation | See Upward Feedback section above |
 
 ## See Also
 
-- `feedback-mastery` skill - SBI feedback model (overlaps but more feedback-focused)
-- `professional-effective-communication` skill - General communication patterns
-
-## Example Scenarios
-
-### Scenario 1: Addressing Missed Deadlines
-
-```markdown
-**Issue:** Team member missed 3 deadlines in past month
-**Impact:** Project delayed, others blocked
-**Goal:** Understand root cause, agree on prevention plan
-
-**Opening:** "I wanted to check in about the recent deliverables. I've noticed
-the last three have come in past deadline, and I'd like to understand what's
-happening and how we can address it together."
-```
-
-### Scenario 2: Peer Conflict
-
-```markdown
-**Issue:** Colleague publicly criticized your work in meeting
-**Impact:** Embarrassed, trust damaged
-**Goal:** Address behavior, rebuild working relationship
-
-**Opening:** "I'd like to talk about what happened in yesterday's standup.
-When you said my code 'missed obvious issues,' I felt called out in front
-of the team. I'd like to understand your concerns and find a better way
-to handle code quality feedback."
-```
-
-### Scenario 3: Asking Manager for Raise
-
-```markdown
-**Issue:** Feel underpaid relative to market/contribution
-**Impact:** Demotivation, considering leaving
-**Goal:** Discuss compensation, get timeline or adjustment
-
-**Opening:** "I'd like to discuss my compensation. I've been here two years,
-taken on the payments project leadership, and want to make sure my salary
-reflects my contributions and the current market."
-```
-
-## Anti-Patterns to Avoid
-
-### In Preparation
-
-- **Scripting every word** - You'll sound robotic; prepare themes, not scripts
-- **Building a case** - This isn't a trial; seek understanding, not winning
-- **Waiting too long** - Issues compound; address promptly
-
-### In Delivery
-
-- **Starting with "You always..."** - Triggers defensiveness immediately
-- **Burying the lead** - Get to the point; don't soften excessively
-- **Asking leading questions** - "Don't you think..." isn't asking
-
-### In Followup
-
-- **Forgetting to check in** - Without follow-up, nothing changes
-- **Holding grudges** - Issue resolved means relationship continues
-- **Over-documenting** - Not everything needs written record
-
-## Success Metrics
-
-A successful difficult conversation:
-
-- Both parties feel heard
-- Specific actions are agreed
-- Relationship is preserved or improved
-- The issue doesn't recur (or has clear escalation)
-- Neither party is blindsided later
+- `feedback-mastery` — SBI model deep dive, feedback calibration
+- `professional-communication` — written communication, email framing

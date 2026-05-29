@@ -1,6 +1,6 @@
 ---
 name: nist-800-61r3-policy-reviewer
-description: "Evaluate IR policy and procedure documents against NIST SP 800-61r3 Section 2.3 required policy elements and the GV.PO/GV.RR/ID.IM-04 CSF categories. Checks for all 8 required policy elements, role authority designations, and plan maintenance requirements. Use when asked to 'review this IR policy', 'check our incident response policy', 'is this policy complete', or 'policy completeness check'."
+description: "Evaluate IR policy and procedure documents against NIST SP 800-61r3 Section 2.3 required policy elements and the GV.PO/GV.RR/ID.IM-04 CSF categories. Checks for all 8 required policy elements, role authority designations, and plan maintenance requirements. Use when asked to 'review this IR policy', 'check our incident response policy', 'is this policy complete', 'policy completeness check', or 'audit our IR policy'."
 user-invocable: true
 ---
 
@@ -10,155 +10,93 @@ Evaluate IR policies, plans, and procedure documents against the requirements de
 
 ---
 
-## Goal
+## Mindset
 
-SP 800-61r3 Section 2.3 explicitly defines the required elements of an IR policy. This skill checks that a policy document contains all required elements, properly designates roles and authorities, and establishes the plan maintenance framework needed to stay current.
+1. **Explicit over implied.** A policy element is either explicitly stated or it is Missing — "we do this operationally" does not count. The document must speak for itself, because during an actual incident nobody reads the CSIRT wiki.
+
+2. **Authority gaps are the most dangerous finding.** Organizations routinely list roles without designating *who can act*. A handler who doesn't know if they're authorized to yank a production server from the network will hesitate. That hesitation has measurable cost.
+
+3. **Generic templates are a warning signal, not a pass.** If §3 of the scope says "all company assets and personnel" and nothing in the document references cloud environments, OT/ICS, remote workers, or contractors, the policy was never tailored — it's theater. Flag it.
+
+4. **Performance measures absent = no improvement loop.** Element 7 is the most commonly missing element. Its absence means the org cannot demonstrate IR program effectiveness and cannot satisfy ID.IM-01.R1. Treat it as a critical gap regardless of how good everything else looks.
+
+5. **The definitions section propagates errors.** If Element 4 is wrong or absent, every handler interprets "incident" differently. Misclassifications cascade into wrong escalation paths, wrong notifications, and wrong recovery decisions. Always check definitions first after scope.
 
 ---
 
-## Inputs
+## Navigation
 
-- The IR policy, IR plan, or procedures document to review (text or file path)
-- Organization type (federal agency, private sector, MSSP) — affects regulatory notification requirements
+### When to use this skill
+- Reviewing an IR policy, IR plan, or IR procedures document for NIST SP 800-61r3 compliance
+- Auditing whether a policy is ready for operational use
+- Generating findings for an IR policy revision task list
+- Feeding input to `nist-800-61r3-maturity-scorer`
+
+### When NOT to use this skill
+- Reviewing an IR *plan's operational procedures* or playbooks (use `nist-800-61r3-lifecycle-reviewer` instead)
+- Assessing incident response *capability maturity* across the PICERL lifecycle (use `nist-800-61r3-maturity-scorer`)
+- Reviewing a tabletop exercise design (different skill)
+
+### Pre-Flight Decision Tree
+
+```
+Is the document provided a policy/plan/procedure?
+├─ No → Ask the user for the IR policy document before proceeding
+└─ Yes
+   │
+   Is the document more than a paragraph long?
+   ├─ No (stub/template placeholder only) → Flag as "Policy shell only — no reviewable content"
+   └─ Yes
+      │
+      What is the organization type?
+      ├─ Federal agency   → Check FISMA + OMB notification requirements (GV.OC-03)
+      ├─ Healthcare       → Check HIPAA Breach Notification Rule timing
+      ├─ Financial        → Check GLBA / NY DFS Part 500 / SEC Rule 10-D1
+      ├─ Critical infra   → Check CISA CIRCIA 72-hour / 24-hour ransom payment rule
+      └─ Private sector   → Check applicable state breach laws; skip FISMA
+         │
+         Does the org use MSSPs, CSPs, or ISPs?
+         ├─ Yes → Element 8 (shared responsibility) is required, not optional
+         └─ No  → Element 8 is N/A; note in report
+
+Run all 8 element checks → Roles & Authorities deep check → Plan framework → Generate report
+```
+
+---
+
+## Philosophy
+
+A policy that cannot be picked up by a new hire on day one of an incident and followed without explanation is not a policy — it is a compliance artifact. Every gap in this checklist represents a decision that will be made ad hoc under pressure, with no documented authority backing it.
 
 ---
 
 ## Workflow
 
 ```
-1. Load Section 2.3 Policy Checklist
+1. Pre-flight: confirm document + org type (decision tree above)
    ↓
-2. Check 8 Required Policy Elements
+2. Load references/policy-checklist.md
    ↓
-3. Check Roles & Authorities (GV.RR-02)
+3. Check all 8 Required Policy Elements (§2.3)
    ↓
-4. Check Plan Framework (ID.IM-04)
+4. Check Roles & Authorities deep check (GV.RR-02.R1, R2)
    ↓
-5. Check Shared Responsibility & Supply Chain (GV.SC-08)
+5. Check Plan Framework (ID.IM-04 R1–R4)
    ↓
-6. Generate Policy Review Report
+6. Check Regulatory/Notification requirements (GV.OC-03) — org-type dependent
+   ↓
+7. Generate Policy Review Report (format below)
 ```
 
-### Step 1: Section 2.3 Policy Checklist
+Full element-by-element checklists, GV.RR-02 role checks, ID.IM-04 plan framework checks, and org-type regulatory tables are in:
+`references/policy-checklist.md`
 
-SP 800-61r3 §2.3 states that most IR policies include the same key elements. These are the required policy elements:
+---
 
-| # | Element | CSF Anchor |
-|---|---------|-----------|
-| 1 | Statement of management commitment | GV.RR-01 |
-| 2 | Purpose and objectives of the policy | GV.PO |
-| 3 | Scope of the policy (to whom/what it applies, under what circumstances) | GV.PO |
-| 4 | Definition of events, cybersecurity incidents, investigations, and related terms | DE.AE-08 |
-| 5 | Roles, responsibilities, and authorities (including who has authority to confiscate/disconnect/shut down assets) | GV.RR-02 |
-| 6 | Guidelines for prioritizing incidents, estimating severity, initiating recovery, maintaining/restoring operations, and other key actions | RS.MA-03, RS.MA-05 |
-| 7 | Performance measures | ID.IM-01 |
-| 8 | Shared responsibility model with third parties (MSSPs, CSPs, ISPs) if applicable | GV.SC-08, GV.RR-02 |
+## Inputs
 
-### Step 2: Check 8 Required Policy Elements
-
-For each element, determine:
-- **Present** — policy explicitly addresses this element
-- **Partial** — element is referenced but incomplete (e.g., roles listed but no authority designations)
-- **Missing** — no evidence of the element
-
-**Detailed checks per element:**
-
-**Element 1 — Management Commitment**
-- Is there a signed/dated endorsement from executive leadership?
-- Does it reference resource allocation for IR?
-- CSF: GV.RR-01 — "Organizational leadership is responsible and accountable for cybersecurity risk"
-
-**Element 2 — Purpose and Objectives**
-- Does the policy state why it exists?
-- Does it reference reducing incident impact and improving response effectiveness?
-- CSF: GV.PO
-
-**Element 3 — Scope**
-- Who does this apply to? (employees, contractors, third parties, specific systems)
-- What environments are covered? (cloud, on-prem, OT/ICS, mobile)
-- Are exclusions documented?
-- CSF: GV.PO
-
-**Element 4 — Definitions**
-- Are "event," "adverse event," and "cybersecurity incident" defined per SP 800-61r3 Appendix B?
-- Is "incident" distinguished from "event" — incidents jeopardize CIA of information or constitute policy violations
-- Are investigation-related terms defined?
-- CSF: DE.AE-08
-
-**Element 5 — Roles, Responsibilities, and Authorities**
-- Are incident response roles explicitly named (incident lead, handlers, legal, HR, comms, leadership)?
-- Does the policy designate which roles have authority to:
-  - Confiscate assets
-  - Disconnect systems from the network
-  - Shut down technology assets
-- Are third-party roles (MSSP, CSP, law enforcement) addressed?
-- CSF: GV.RR-02.R1, GV.RR-02.R2
-
-**Element 6 — Prioritization, Severity, and Recovery Guidelines**
-- Are incident severity/priority tiers defined (e.g., P1–P4 or Critical/High/Medium/Low)?
-- Are risk evaluation factors listed? SP 800-61r3 RS.MA.N2 suggests: asset criticality, functional impact, data impact, stage of observed activity, threat actor characterization, recoverability
-- Are recovery initiation criteria defined? (RS.MA-05.R1)
-- Are time-based response SLAs included?
-- CSF: RS.MA-03.R1, RS.MA-05.R1
-
-**Element 7 — Performance Measures**
-- Are IR program performance metrics defined?
-- Examples: mean time to detect, mean time to respond, mean time to recover, % incidents meeting SLAs, % staff trained
-- Is there a review cycle for measuring performance against these metrics?
-- CSF: ID.IM-01.R1 — "Periodically evaluate IR program performance to identify problems"
-
-**Element 8 — Shared Responsibility Model**
-- If the organization uses MSSPs/CSPs/ISPs: are their responsibilities documented?
-- Are contracts/SLAs referenced?
-- Are information flow and coordination authorities defined?
-- Are restrictions on third-party actions documented (e.g., cannot share sanitized incident info with other customers)?
-- CSF: GV.SC-08, GV.RR-02.R3
-
-### Step 3: Roles & Authorities Deep Check (GV.RR-02)
-
-Check specifically for GV.RR-02.R1, R2, R3:
-
-**R1 — All IR roles documented in organizational policies:**
-- [ ] Incident Response Team / SOC roles documented
-- [ ] Legal counsel role in IR documented
-- [ ] HR role documented (GV.RR-02 + RS.CO-03.R3)
-- [ ] Public affairs / media relations role documented
-- [ ] Physical security and facilities role documented
-- [ ] Asset owners role documented
-- [ ] Leadership decision authority documented
-
-**R2 — All appropriate individuals designated the authority to fulfill IR responsibilities:**
-- [ ] Named or role-titled individuals with authority to isolate/disconnect systems
-- [ ] Named or role-titled individuals with authority to invoke business continuity plans
-- [ ] Named or role-titled individuals with authority to engage law enforcement
-- [ ] Escalation/elevation triggers and authority chain documented (RS.MA-04)
-
-### Step 4: Plan Framework Check (ID.IM-04)
-
-SP 800-61r3 ID.IM-04 has four recommendations for all cybersecurity plans:
-
-- **R1** — Synchronize business continuity plans with incident response plans
-  - Check: Does the policy reference BCP/DRP alignment?
-- **R2** — Review and update all cybersecurity plans periodically or when significant improvements are identified
-  - Check: Is there a review/update cycle defined? (Annual, post-incident trigger?)
-- **R3** — Base each plan on the organization's unique requirements, mission, size, structure, and functions
-  - Check: Is the policy tailored to the org or clearly a generic template?
-- **R4** — Each plan identifies the resources and management support needed
-  - Check: Are resource requirements (staff, tools, budget) referenced?
-
-### Step 5: Regulatory & Notification Check (GV.OC-03)
-
-Based on organization type, verify the policy addresses applicable notification requirements:
-
-**GV.OC-03.R1** — Cybersecurity requirements include all IR-related requirements (incident notification, data breach reporting)
-
-Check:
-- [ ] Notification obligations referenced (FISMA, HIPAA, PCI-DSS, GDPR, state breach laws — as applicable)
-- [ ] Breach notification timelines addressed (RS.CO-02.R3)
-- [ ] Law enforcement notification criteria defined (RS.CO-02.R5)
-- [ ] Regulatory body notification criteria defined
-
-### Step 6: Generate Policy Review Report
+- The IR policy, IR plan, or procedures document (text or file path)
+- Organization type (federal agency, private sector, healthcare, financial, MSSP) — determines regulatory notification requirements
 
 ---
 
@@ -167,7 +105,7 @@ Check:
 ```
 === NIST SP 800-61r3 IR Policy Review ===
 Document: [policy name/version]
-Organization type: [federal / private / MSSP]
+Organization type: [federal / private / healthcare / financial / MSSP]
 Standard: NIST SP 800-61r3 §2.3 + CSF 2.0 GV/ID elements
 
 ━━━ SECTION 2.3 REQUIRED ELEMENTS CHECKLIST ━━━
@@ -186,15 +124,13 @@ Standard: NIST SP 800-61r3 §2.3 + CSF 2.0 GV/ID elements
 [~] Element 5 — Roles, Responsibilities, and Authorities
     Partial: Roles listed (IR Team, Legal, HR) but authority to disconnect
     systems is not designated to any specific role.
-    Required by: GV.RR-02.R2 — "All appropriate individuals should be
-    designated the authority necessary to fulfill their IR responsibilities"
+    Required by: GV.RR-02.R2
     Fix: Add explicit authority table specifying who can isolate/disconnect/
     shut down each asset class.
 
 [✓] Element 6 — Prioritization Guidelines
     Found: Four-tier severity model (P1-P4) with response SLAs; §3.2
-    Note: Recovery initiation criteria (RS.MA-05.R1) are absent — policy
-    defines when to start responding but not when to start recovering.
+    Note: Recovery initiation criteria (RS.MA-05.R1) are absent.
 
 [✗] Element 7 — Performance Measures
     Missing: No IR performance metrics defined anywhere in the document.
@@ -231,18 +167,39 @@ Estimated effort to remediate: LOW — most gaps are additions, not rewrites.
 
 ---
 
+## NEVER
+
+- **NEVER accept "implied" policy elements** — if an element is not explicit in the document, mark it Missing. "We do this" verbal assurance does not make a policy compliant; auditors and incident handlers both read the document, not the culture.
+
+- **NEVER skip the authority designations check** — GV.RR-02.R2 is the single most commonly missed requirement in real-world policy reviews. Listing roles without designating authority is operationally equivalent to having no policy: the handler still can't act without making an unauthorized judgment call.
+
+- **NEVER mark Element 4 (definitions) as Partial when terms are absent** — if "event" and "incident" are not explicitly defined, downstream classification, escalation, and notification decisions will all be inconsistent. There is no meaningful "partial" state for a definitions section that omits the primary terms.
+
+- **NEVER recommend creating a separate document for each gap** — all 8 elements belong in the policy document itself. Suggesting a separate "definitions annex" or "roles addendum" is a maintenance antipattern: separate documents drift apart, and handlers only read the policy they were trained on.
+
+- **NEVER skip the definitions check when a policy has a severity model** — organizations frequently define a four-tier severity model but never define what constitutes an "incident" vs. an "event." The severity model is then applied inconsistently: one analyst escalates a phishing email to P1; another logs it as a ticket.
+
+- **NEVER flag Element 8 (shared responsibility) as N/A without asking** — organizations routinely forget that their HR system, email, or endpoint management is SaaS. If the org runs any cloud services, Element 8 likely applies. Ask explicitly before marking N/A.
+
+- **NEVER confuse a policy review with a maturity assessment** — this skill checks whether required elements exist, not whether they work well. A policy can pass all 8 elements and still represent a low-maturity program. Direct maturity questions to `nist-800-61r3-maturity-scorer`.
+
+---
+
+## When Things Go Wrong
+
+| Situation | What it usually means | Recommended action |
+|-----------|----------------------|-------------------|
+| Policy is a vendor template with the org's name substituted | ID.IM-04.R3 failure; likely also fails Elements 3, 6, 8 | Flag the entire document as "not tailored" before element-by-element review; estimate remediation effort as HIGH |
+| Document is labeled "IR Plan" but contains policy-level content | Org conflated policy and plan — common in SMBs | Review the elements present regardless of label; note the structural issue in the report |
+| Policy references "Appendix X for roles" but appendix is not provided | Cannot complete GV.RR-02 check | Note the missing appendix; mark Element 5 as Incomplete Submission, not Partial |
+| Policy was last updated more than 3 years ago | ID.IM-04.R2 violation likely; technology/regulatory references will be stale | Flag the date; check if CIRCIA (effective 2024), GDPR, or current CSF 2.0 references are missing |
+| Org claims MSSP handles all IR and refuses to provide MSSP contract | Element 8 cannot be verified; GV.SC-08 likely fails | Document the gap as Unverifiable; note that undocumented MSSP authority scope is itself a compliance risk |
+
+---
+
 ## Deliverable
 
 A checklist-based policy review report with element-by-element findings, direct SP 800-61r3 citations, and specific remediation guidance. Suitable for:
 - IR policy audit findings
 - Input to `nist-800-61r3-maturity-scorer`
 - Policy revision task list
-
----
-
-## NEVER
-
-- **NEVER accept "implied" policy elements** — if an element is not explicit in the document, it is Missing
-- **NEVER skip the authority designations check** — GV.RR-02.R2 is one of the most commonly missed requirements
-- **NEVER recommend creating a separate document for each gap** — all elements should be in the policy; suggest additions to the existing document
-- **NEVER skip the definitions check** — undefined terms (especially "event" vs. "incident") cause real operational confusion during actual incidents
