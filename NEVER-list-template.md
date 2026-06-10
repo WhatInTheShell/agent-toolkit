@@ -21,6 +21,14 @@ Template structure:
 
 Both parts are required. An item missing either part must be revised before it is accepted into a SKILL.md.
 
+### Bullet format is mandatory (not numbered)
+
+Each NEVER item **MUST** be a top-level Markdown bullet beginning `- NEVER …` or `- **NEVER …`. Do **NOT** use a numbered list (`1. NEVER …`, `2. NEVER …`).
+
+This is not stylistic. Automated graders, link-integrity checks, and the QA scorecard count NEVER items by anchoring on a line that starts with `- ` (regex `/^- (\*\*)?NEVER/`). A numbered item (`1. **NEVER …`) is **silently skipped** by that anchor: the skill renders identically to a human reviewer but scores **zero** NEVER items in the gate, so a fully-authored skill is failed (or, worse, a thin skill passes because its numbered items were never counted at all). The failure is invisible at authoring time and only surfaces when the scorecard runs.
+
+Acceptable alternate presentation: a NEVER **table** (`| Anti-pattern | Why it fails |`) is recognized for leaf reference skills that catalog many anti-patterns at once. If you use a table, the column-two cell must still carry the non-obvious WHY mechanism, and the section heading must still be `## NEVER` so the section is discoverable. Prose lists, however, must be bullets — never numbered.
+
 ## Minimum Requirement
 
 Every `SKILL.md` in the agent-toolkit library **must contain a dedicated `## NEVER` section with at least 5 items** that meet the format standard above.
