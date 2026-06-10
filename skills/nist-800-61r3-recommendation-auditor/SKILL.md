@@ -177,3 +177,40 @@ A citation-anchored audit report with Met/Partial/Not Met assessments for all in
 | File | Purpose | Load When |
 |------|---------|-----------|
 | `references/r-item-catalog.md` | Complete 89-item R-item catalog with scope maps and scoring formula | Always — load before step 1 |
+
+## Cross-Framework Delta Table (NIST CSF ↔ ISO 27001 ↔ SOC 2 Type II ↔ PCI-DSS)
+
+Use this table when a client deliverable must map IR findings to multiple compliance frameworks simultaneously.
+
+| NIST CSF Function | NIST 800-61r3 Phase | ISO 27001:2022 Control | SOC 2 Type II CC | PCI-DSS v4.0 Req |
+|-------------------|--------------------|-----------------------|-----------------|-----------------|
+| Identify (ID.RA) | Preparation | A.8.8 Vulnerability mgmt | CC3.2 Risk assessment | 6.3 Security vulnerabilities |
+| Protect (PR.AT) | Preparation | A.6.3 Security awareness | CC1.4 Competence | 12.6 Security awareness |
+| Detect (DE.AE) | Detection & Analysis | A.8.16 Monitoring | CC7.1 Threat detection | 10.7 Failure detection |
+| Detect (DE.CM) | Detection & Analysis | A.8.15 Logging | CC7.2 Anomaly evaluation | 10.3 Log integrity |
+| Respond (RS.RP) | Containment | A.5.26 IR planning | CC7.3 Response evaluation | 12.10.1 IR plan |
+| Respond (RS.CO) | Eradication | A.5.29 Continuity IR | CC7.4 Incident response | 12.10.3 IR response |
+| Respond (RS.AN) | Post-incident | A.5.28 Evidence collection | CC4.1 Monitoring activities | 12.10.4 Training |
+| Recover (RC.RP) | Recovery | A.5.30 ICT readiness | CC7.5 Recovery | 12.10.5 Recovery alerts |
+| Recover (RC.IM) | Post-incident | A.5.27 Lessons learned | CC4.2 Deficiency eval | 12.10.6 Process evolution |
+
+### Breach Notification Deadlines by Framework
+
+| Framework | Notification Deadline | Notify Whom | Trigger |
+|-----------|----------------------|-------------|---------|
+| GDPR Art. 33 | 72 hours | Supervisory Authority | Personal data breach |
+| GDPR Art. 34 | Without undue delay | Affected individuals | High-risk to rights |
+| HIPAA Breach Rule | 60 days (from discovery) | HHS + affected individuals | Unsecured PHI breach |
+| HIPAA (>500 affected) | 60 days | HHS + media in affected state | Same |
+| PCI-DSS v4.0 Req 12.10.2 | Immediately | Card brands + acquirer | Suspected or confirmed compromise |
+| NY SHIELD / CCPA | 30–45 days (varies by state) | State AG + affected residents | Personal information breach |
+| SEC (public companies) | 4 business days | SEC Form 8-K | Material cybersecurity incident |
+
+### IR Maturity Mapping — Framework Equivalence
+
+| Maturity Level | NIST CSF Tier | ISO 27001 Conformance | SOC 2 Opinion | PCI-DSS Compliance Level |
+|---------------|--------------|----------------------|---------------|------------------------|
+| 1 — Initial | Tier 1 (Partial) | Non-conformant | Qualified / Adverse | Non-compliant |
+| 2 — Developing | Tier 2 (Risk-informed) | Partially conformant | Qualified | Compensating controls |
+| 3 — Defined | Tier 3 (Repeatable) | Conformant | Unqualified | Compliant |
+| 4 — Managed | Tier 4 (Adaptive) | Conformant + continual improvement | Clean + SOC 2+ | Compliant + validated |
