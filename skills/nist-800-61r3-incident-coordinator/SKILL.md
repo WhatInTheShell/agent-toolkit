@@ -343,3 +343,8 @@ Real-time coordination guidance covering:
 - Containment verification before eradication sign-off
 - Recovery readiness checklist
 - Handoff package for `nist-800-61r3-after-action-reviewer`
+
+<!-- INJECT:B3:ir-coordination -->
+<!-- Source: awesome-claude-code-subagents (MIT) — incident-responder.md (D-grade source; PATTERNS only) -->
+## Track B / B3 — IR coordination patterns
+Severity-tiered notification matrix, append-only evidence-bag manifest (chain of custody), and Lessons-Learned schema (no tracked-metric JSON). Full reference: `~/soar/splunk-soar-base/knowledgebase/ir-coordination-patterns.md`. SEV-1/SEV-2 with identity/mail implicated → coordinate out-of-band.

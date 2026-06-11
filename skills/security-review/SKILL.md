@@ -174,3 +174,8 @@ function handleUpdate(rawBody: unknown) {
 | Mass assignment overwrites protected field | TypeScript type used as runtime validation | Add Zod/Valibot schema at controller boundary; explicit field allowlist before DB write |
 | npm audit clean but supply chain incident | Typosquatted package or compromised transitive dep | Enable npm provenance verification; pin transitive deps in lock file; generate SBOM and audit against known-good list |
 | API returns stack trace in production | Error middleware not stripping internals | Implement production error handler that returns `{ error: errorId }` only; log full trace server-side |
+
+<!-- INJECT:B5:credential-rotation -->
+<!-- Source: awesome-claude-code-subagents (MIT) — security-engineer.md (pattern-extracted, not verbatim) -->
+## Track B / B5 — SOAR connector credential rotation & threat model
+Per-connector rotation checklist, API-scope (least-privilege) audit, and a STRIDE-lite SOAR-platform threat model. Full reference: `~/soar/splunk-soar-base/knowledgebase/connector-credential-rotation.md`. Highest-value control: dual-approval gate on every destructive Tier 0/1 action.
